@@ -3,6 +3,8 @@ import { JsonController, Get, Post, Body, Param } from "routing-controllers";
 import { ITeacher } from "./Teacher.types";
 import { ApiResponse } from "helpers/ApiResponse";
 import { ApiError } from "helpers/ApiError";
+import { validate } from 'class-validator';
+import {CreateTeacher} from "./CreateTeacher.dto"
 
 const storeData: ITeacher[] = [];
 
@@ -28,10 +30,21 @@ export default class Teacher {
   }
 
   @Post()
-  async setTeacher(@Body() body: ITeacher) {
-    storeData.push(body);
+  async setTeacher(@Body() body: CreateTeacher) {
+    const errors = await validate(body);
+
+    if (errors.length > 0) {
+      throw new ApiError(400, {
+        message: "Validation failed",
+        code: "PERSON_VALIDATION_ERROR",
+        errors,
+      });
+    }
+
+    const id = storeData.length;
+    storeData.push({ ...body, id });
 
     return new ApiResponse(true, "Person successfully created");
   }
-}
+  }
 
