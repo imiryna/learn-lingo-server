@@ -2,14 +2,9 @@
   "name": "learn-lingo-server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.ts",
-  "scripts": {
-    "start": "cross-env NODE_ENV=production node ./server.js",
-    "start:dev": "cross-env NODE_ENV=development nodemon ./server.js",
-    "lint": "eslint **/*.ts",
-    "lint:fix": "eslint --fix **/*.ts"
-  },
-  "repository": {
+  "main": "index.js"
+},
+ "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/imiryna/learn-lingo-server.git"
   },
