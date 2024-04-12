@@ -4,7 +4,7 @@ interface Reviews{
     comment: string;
 }
 
-export interface IPerson {
+export interface ITeacher {
     id: number;
     name: string;
     susurname: string;
