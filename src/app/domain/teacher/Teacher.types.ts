@@ -1,4 +1,4 @@
-interface Reviews{
+export interface Reviews{
     reviewer_name: string;
     reviewer_rating: number;
     comment: string;
@@ -7,7 +7,7 @@ interface Reviews{
 export interface ITeacher {
     id: number;
     name: string;
-    susurname: string;
+    surname: string;
     languages: string[];
     levels: string[];
     rating: number;
