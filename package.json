@@ -2,18 +2,18 @@
   "name": "learn-lingo-server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js"
-},
- "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/imiryna/learn-lingo-server.git"
-  },
+  "main": "index.js",
   "author": "Iryna Burlaka",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/imiryna/learn-lingo-server/issues"
   },
   "homepage": "https://github.com/imiryna/learn-lingo-server#readme",
+  "scripts": {
+    "start": "node -r tsconfig-paths/register ./dist/main.js",
+    "dev": "nodemon",
+    "build": "tsc -p tsconfig.json"
+  },
   "dependencies": {
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",

@@ -3,8 +3,8 @@ import { JsonController, Get, Post, Body, Param } from "routing-controllers";
 import { ITeacher } from "./Teacher.types";
 import { ApiResponse } from "helpers/ApiResponse";
 import { ApiError } from "helpers/ApiError";
-import { validate } from 'class-validator';
-import {CreateTeacher} from "./CreateTeacher.dto"
+import { validate } from "class-validator";
+import { CreateTeacher } from "./CreateTeacher.dto";
 
 const storeData: ITeacher[] = [];
 
@@ -24,14 +24,21 @@ export default class Teacher {
       throw new ApiError(404, {
         code: "TEACHER_NOT_FOUND",
         message: `Teacher with id ${id} not found`,
-      })
+      });
     }
     return new ApiResponse(true, teacher);
   }
 
+  addIdToObject = (newObject) => {
+    const newId = Math.floor(Math.random() * 1000);
+    newObject.id = newId;
+    return newObject;
+  };
+
   @Post()
   async setTeacher(@Body() body: CreateTeacher) {
-    const errors = await validate(body);
+    const bodyWithId = this.addIdToObject(body);
+    const errors = await validate(bodyWithId);
 
     if (errors.length > 0) {
       throw new ApiError(400, {
@@ -42,9 +49,8 @@ export default class Teacher {
     }
 
     const id = storeData.length;
-    storeData.push({ ...body, id });
+    storeData.push({ ...bodyWithId, id });
 
     return new ApiResponse(true, "Person successfully created");
   }
-  }
-
+}
