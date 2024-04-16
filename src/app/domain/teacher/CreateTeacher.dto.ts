@@ -1,11 +1,8 @@
-import {  Length, IsInt, Min, Max, ArrayNotEmpty, ValidateNested, IsUrl, MaxLength} from "class-validator";
+import { Length, IsInt, Min, Max, ArrayNotEmpty, ValidateNested, IsUrl, MaxLength } from "class-validator";
 
 import type { ITeacher, Reviews } from "./Teacher.types";
 
 export class CreateTeacher implements Omit<ITeacher, "id"> {
-  @IsInt()
-  id: number;
-
   @Length(2, 20)
   name: string;
 
@@ -31,12 +28,12 @@ export class CreateTeacher implements Omit<ITeacher, "id"> {
   lessons_done: number;
 
   @IsUrl()
-  avatar_url:string;
+  avatar_url: string;
 
   @MaxLength(200)
   lesson_info: string;
 
-  @ArrayNotEmpty({each:true})
+  @ArrayNotEmpty({ each: true })
   conditions: string[];
 
   @MaxLength(200)
