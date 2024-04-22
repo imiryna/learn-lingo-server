@@ -2,7 +2,7 @@ import "reflect-metadata";
 import express from "express";
 import { useExpressServer } from "routing-controllers";
 
-import { IService } from "../types/services";
+import { IService } from "types/services";
 import { controllers } from "app/domain";
 import { middlewares } from "app/middlewares";
 

@@ -5,7 +5,7 @@ import { ApiResponse } from "helpers/ApiResponse";
 import { ApiError } from "helpers/ApiError";
 import { validate } from "class-validator";
 import { CreateTeacher } from "./CreateTeacher.dto";
-import { HTTPRequestLogger } from "../../middlewares/HTTPRequestLogger";
+import { HTTPRequestLogger } from "app/middlewares/HTTPRequestLogger";
 
 const storeData: ITeacher[] = [];
 
