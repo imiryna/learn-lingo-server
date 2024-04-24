@@ -1,16 +1,11 @@
-// const { initializeApp } = require("firebase/app");
-import { initializeApp } from "firebase/app";
+import config from "./config";
 import admin from "firebase-admin";
 
 // import { serviceAccount } from "path/to/serviceAccountKey.json";
+
+const serviceAccount = null;
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://learn-lingo-f84ed-default-rtdb.europe-west1.firebasedatabase.app",
 });
-
-import firebaseConfig from "./config";
-// const { getAnalytics } = require("firebase/analytics");
-
-// Initialize Firebase
-export const firebase = initializeApp(firebaseConfig);
