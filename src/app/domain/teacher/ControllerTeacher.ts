@@ -6,6 +6,10 @@ import { ApiError } from "helpers/ApiError";
 import { validate } from "class-validator";
 import { CreateTeacher } from "./CreateTeacher.dto";
 import { HTTPRequestLogger } from "app/middlewares/HTTPRequestLogger";
+import { firebase } from "../../../../firebase";
+import { getFirestore, collection, doc, addDoc, getDoc, getDocs, updateDoc, deleteDoc } from "firebase/firestore";
+
+const db = getFirestore(firebase);
 
 const storeData: ITeacher[] = [];
 
@@ -50,9 +54,16 @@ export default class Teacher {
       });
     }
 
-    const id = storeData.length;
-    storeData.push({ ...bodyWithId, id });
-
-    return new ApiResponse(true, "Person successfully created");
+    try {
+      const data = JSON.parse(JSON.stringify(body));
+      await addDoc(collection(db, "teachers"), data);
+      return new ApiResponse(true, "Person successfully created");
+    } catch (error) {
+      return new ApiError(400, {
+        message: "Can't add to database",
+        code: "DATABASE_ERROR",
+        errors: error,
+      });
+    }
   }
 }

@@ -33,7 +33,7 @@ export class CreateTeacher implements Omit<ITeacher, "id"> {
   @MaxLength(200)
   lesson_info: string;
 
-  @ArrayNotEmpty({ each: true })
+  @ArrayNotEmpty()
   conditions: string[];
 
   @MaxLength(200)
