@@ -18,7 +18,10 @@ export default class Teacher {
   @Get()
   @UseAfter(HTTPRequestLogger)
   async getAll() {
-    return new ApiResponse(true, storeData);
+    console.log(db);
+    const teachers = await getDocs(collection(db, "teachers"));
+    console.log(teachers.docs);
+    return new ApiResponse(true, "bugaga");
   }
 
   @Get("/:id")
