@@ -1,11 +1,9 @@
-// import config from "./config";
+import config from "./config";
 import admin from "firebase-admin";
 import serviceAccount from "./serviceAccountKey.json";
 
 const asAString = JSON.parse(JSON.stringify(serviceAccount));
 console.log(typeof asAString);
-// import * as fs from "fs";
-// import * as path from "path";
 
 // console.log(__dirname);
 
@@ -15,5 +13,5 @@ console.log(typeof asAString);
 
 export const firebaseApp = admin.initializeApp({
   credential: admin.credential.cert(asAString),
-  databaseURL: "https://learn-lingo-f84ed-default-rtdb.europe-west1.firebasedatabase.app",
+  databaseURL: config.databaseURL,
 });

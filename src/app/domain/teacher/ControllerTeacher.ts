@@ -11,9 +11,6 @@ import admin from "firebase-admin";
 
 const db = admin.database(firebaseApp);
 const ref = db.ref("teachers");
-ref.once("value", function (snapshot) {
-  console.log(snapshot.val());
-});
 
 const storeData: ITeacher[] = [];
 
@@ -22,17 +19,26 @@ export default class Teacher {
   @Get()
   @UseAfter(HTTPRequestLogger)
   async getAll() {
+    let data;
+    let error;
     ref.on(
       "value",
       (snapshot) => {
-        console.log(snapshot.val());
-        return new ApiResponse(true, snapshot.val());
+        console.log("here:", snapshot.val());
+        data = snapshot.val();
+        // return new ApiResponse(true, "snapshot.val()");
       },
       (errorObject) => {
         console.log("The read failed: " + errorObject.name);
-        throw new ApiError(400, errorObject);
+        error = errorObject;
+        // throw new ApiError(400, errorObject);
       }
     );
+    if (error) {
+      throw new ApiError(400, error);
+    } else {
+      return new ApiResponse(true, data, "gjgjgj");
+    }
   }
 
   @Get("/:id")
