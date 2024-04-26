@@ -55,16 +55,10 @@ export default class Teacher {
     return new ApiResponse(true, teacher);
   }
 
-  addIdToObject = (newObject) => {
-    const newId = Math.floor(Math.random() * 1000);
-    newObject.id = newId;
-    return newObject;
-  };
-
   @Post()
   async setTeacher(@Body() body: CreateTeacher) {
-    const bodyWithId = this.addIdToObject(body);
-    const errors = await validate(bodyWithId);
+    const newId = Math.floor(Math.random() * 1000);
+    const errors = await validate(body);
 
     if (errors.length > 0) {
       throw new ApiError(400, {
@@ -76,8 +70,8 @@ export default class Teacher {
 
     try {
       const data = JSON.parse(JSON.stringify(body));
-
-      ref.set(data);
+      const childRef = ref.child(newId.toString());
+      childRef.set(data);
       return new ApiResponse(true, "Person successfully created");
     } catch (error) {
       return new ApiError(400, {
