@@ -76,7 +76,8 @@ export default class Teacher {
 
     try {
       const data = JSON.parse(JSON.stringify(body));
-      // await addDoc(collection(db, "teachers"), data);
+
+      ref.set(data);
       return new ApiResponse(true, "Person successfully created");
     } catch (error) {
       return new ApiError(400, {
