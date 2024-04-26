@@ -6,10 +6,14 @@ import { ApiError } from "helpers/ApiError";
 import { validate } from "class-validator";
 import { CreateTeacher } from "./CreateTeacher.dto";
 import { HTTPRequestLogger } from "app/middlewares/HTTPRequestLogger";
-import { firebase } from "../../../../firebase";
-import { getFirestore, collection, doc, addDoc, getDoc, getDocs, updateDoc, deleteDoc } from "firebase/firestore";
+import { firebaseApp } from "../../../../firebase";
+import admin from "firebase-admin";
 
-const db = getFirestore(firebase);
+const db = admin.database(firebaseApp);
+const ref = db.ref("teachers");
+ref.once("value", function (snapshot) {
+  console.log(snapshot.val());
+});
 
 const storeData: ITeacher[] = [];
 
@@ -18,10 +22,17 @@ export default class Teacher {
   @Get()
   @UseAfter(HTTPRequestLogger)
   async getAll() {
-    console.log(db);
-    const teachers = await getDocs(collection(db, "teachers"));
-    console.log(teachers.docs);
-    return new ApiResponse(true, "bugaga");
+    ref.on(
+      "value",
+      (snapshot) => {
+        console.log(snapshot.val());
+        return new ApiResponse(true, snapshot.val());
+      },
+      (errorObject) => {
+        console.log("The read failed: " + errorObject.name);
+        throw new ApiError(400, errorObject);
+      }
+    );
   }
 
   @Get("/:id")
@@ -59,7 +70,7 @@ export default class Teacher {
 
     try {
       const data = JSON.parse(JSON.stringify(body));
-      await addDoc(collection(db, "teachers"), data);
+      // await addDoc(collection(db, "teachers"), data);
       return new ApiResponse(true, "Person successfully created");
     } catch (error) {
       return new ApiError(400, {
