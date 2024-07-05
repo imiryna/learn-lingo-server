@@ -1,4 +1,4 @@
-import { Length, IsInt, Mine ArrayNotEmpty, ValidateNested, IsUrl, MaxLength } from "class-validator";
+import { Length, IsInt, Min, ArrayNotEmpty, IsUrl, MaxLength } from "class-validator";
 
 import type { ITeacher, Reviews } from "./Teacher.types";
 
